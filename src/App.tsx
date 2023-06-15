@@ -1,49 +1,31 @@
 import './App.css'
 import Topbar from './components/topbar'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Companies from './pages/Companies';
+import Products from './pages/Products';
+import Container from './Layouts/Container';
 
 function App() {
 
   return (
     <>
 
-      <Topbar/>
 
-      <div className="container max-w-6xl mx-auto">
+      <Router>
+        <Topbar/>
+        <Container>
+          <Routes>
 
-        <div className="pt-20"></div>
+              <Route path="/" element={<Login/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/companies" element={<Companies/>} />
+              <Route path="/products" element={<Products/>} />
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque qui fuga provident minima accusantium tempore id, numquam totam, quaerat est ipsa soluta consectetur? Blanditiis enim voluptatibus rerum sapiente incidunt? Vitae.
-        </p>
 
-      </div>
+          </Routes>
+        </Container>
+      </Router>
 
     </>
   )
