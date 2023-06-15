@@ -1,7 +1,13 @@
 export interface Company {
-  id: number;
-  name: string;
-  address: string;
-  phone: string;
-  // Add more properties as needed
+  nit: number,
+  name: string,
+  address: string
+  phone: number,
+}
+
+export type CompanyType = {
+  nit: number,
+  name: string,
+  address: string
+  phone: number,
 }

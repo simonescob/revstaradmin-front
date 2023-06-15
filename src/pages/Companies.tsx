@@ -1,23 +1,16 @@
 import { useState } from 'react';
 import CompanyList from '../components/CompanyList'
-import { on, trigger } from '../Helpers/Events'
 import ModalCreateCompany from '../Modals/ModalCreateCompany'
+import ModalDeleteCompany from '../Modals/ModalDeleteCompany';
 
 function Companies() {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
 
   function showModal() {
-    trigger('showModalCompany');
-  }
-  
-  on('showModalCompany', () => {
     setModalVisible(true);
-  })
-
-  on('closeModalCompany', () => {
-    setModalVisible(false);
-  })
+  }
 
   return (
     <div>
@@ -32,7 +25,8 @@ function Companies() {
 
       <CompanyList/>
 
-      { modalVisible && <ModalCreateCompany/> }
+      <ModalCreateCompany visible={modalVisible} setVisible={setModalVisible} />
+      <ModalDeleteCompany visible={modalDelete} setVisible={setModalDelete} />
 
     </div>
   )

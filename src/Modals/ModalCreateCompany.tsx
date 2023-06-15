@@ -1,32 +1,79 @@
-import { useForm } from 'react-hook-form';
-import { trigger } from '../Helpers/Events';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { CompanyType } from '../entities/Company';
+import { on } from '../Helpers/Events';
+import { createCompany, updateCompany } from '../Services/CompanyServices';
 
-interface CompanyFormInputs {
-  name: string;
-  address: string;
-  phone: string;
+interface CreateCompanyProps {
+  visible: boolean;
+  setVisible: any;
 }
 
-const ModalCreateCompany: React.FC = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CompanyFormInputs>();
+const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
 
-  const onSubmit = (data: CompanyFormInputs) => {
+  const [mode, setMode] = useState<'create'|'update'>('create')
+
+  const { visible, setVisible } = props;
+
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<CompanyType>();
+
+  const onSubmit: SubmitHandler<CompanyType> = (data) => {
     // Perform submission logic here
     console.log(data);
     // Reset form
+
+    if(mode === 'create'){
+      createCompany(data);
+    }
+
+    if(mode === 'update'){
+      updateCompany(data);
+    }
+
     reset();
     // Close modal
-    // toggleModal();
+    closeModal();
   };
 
   const closeModal = () => {
-    trigger('closeModalCompany');
+    setVisible(false);
   }
+
+  useEffect(() => {
+    if(visible === false){
+      reset();
+      setMode('create');
+    }
+  }, [visible])
+
+  useEffect(() => {
+    
+    on('editModalCompany', (detail: any) => {
+      
+      const data = detail.detail.company;
+
+      // console.log('editing', detail);
+      reset();
+
+      setVisible(true);
+
+      if(data){
+        setMode('update');
+        setValue('nit', data.nit);
+        setValue('phone', data.phone);
+        setValue('address', data.address);
+        setValue('name', data.name);
+      }
+
+    })
+    
+  }, [])
 
   return (
     <>
 
-      {/* Modal */}
+      { visible &&
+
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800/70">
           <div className="bg-white w-96 rounded p-6">
             <h2 className="text-2xl font-bold mb-4">Create Company</h2>
@@ -60,9 +107,21 @@ const ModalCreateCompany: React.FC = () => {
                   Phone
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="phone"
-                  {...register('phone', { required: true })}
+                  {...register('phone', { required: true, min: 0 })}
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                {errors.phone && <span className="text-red-500">Phone is required</span>}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2" htmlFor="nit">
+                  NIT
+                </label>
+                <input
+                  type="number"
+                  id="nit"
+                  {...register('nit', { required: true, min: 0 })}
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {errors.phone && <span className="text-red-500">Phone is required</span>}
@@ -72,7 +131,7 @@ const ModalCreateCompany: React.FC = () => {
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
                 >
-                  Create
+                  {mode}
                 </button>
                 <button
                   type="button"
@@ -85,6 +144,8 @@ const ModalCreateCompany: React.FC = () => {
             </form>
           </div>
         </div>
+
+      }
 
     </>
   );

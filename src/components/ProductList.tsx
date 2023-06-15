@@ -17,8 +17,8 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-      {products.map((product) => (
-        <div key={product.id} className="bg-white shadow-md rounded-md p-6">
+      {products.map((product, key) => (
+        <div key={key} className="bg-white shadow-md rounded-md p-6">
           <img
             src={product.image}
             alt={product.name}

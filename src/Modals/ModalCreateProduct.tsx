@@ -1,19 +1,12 @@
 import { useForm } from 'react-hook-form';
+import { Product } from '../entities/Product';
 import { trigger } from '../Helpers/Events';
 import { createProduct } from '../Services/ProductServices';
 
-interface ProductFormInputs {
-  name: string;
-  amount: number;
-  price: number;
-  description: string;
-  image?: string,
-}
-
 const ModalCreateProduct: React.FC = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormInputs>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<Product>();
 
-  const onSubmit = (data: ProductFormInputs) => {
+  const onSubmit = (data: Product) => {
     // Perform submission logic here
     console.log(data);
     // Reset form
