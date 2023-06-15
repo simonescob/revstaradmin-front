@@ -17,11 +17,11 @@ const Topbar: React.FC = () => {
         </Link>
 
         <Link className="text-white hover:text-gray-300" to="/companies">
-          Registrar Empresa
+          Empresas
         </Link>
 
         <Link className="text-white hover:text-gray-300" to="/products">
-          Administrar Productos
+          Inventario
         </Link>
 
       </div>

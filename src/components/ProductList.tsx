@@ -1,46 +1,17 @@
 import { useEffect, useState } from 'react';
-
-interface Product {
-  id: number;
-  name: string;
-  amount: number;
-  price: number;
-  description: string;
-  image: string;
-  // Add more properties as needed
-}
+import { Product } from '../entities/Product';
+import { fetchListProducts } from '../Services/ProductServices';
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    
-    setProducts([
-      {
-        name: 'product 1',
-        id: 1,
-        price: 2034,
-        description: '3057990871',
-        amount: 73,
-        image: 'https://i.imgur.com/2SWQQOR.jpg'
-      },
-      {
-        name: 'product 2',
-        id: 2,
-        price: 2034,
-        description: '3057990871',
-        amount: 73,
-        image: 'https://i.imgur.com/2yqBrku.jpg'
-      },
-      {
-        name: 'product 3',
-        id: 3,
-        price: 2034,
-        description: '3057990871',
-        amount: 73,
-        image: 'https://i.imgur.com/OIXgVNX.jpg'
-      },
-    ]);
+
+    fetchListProducts()
+    .then(res => {
+      setProducts(res)
+    })
+    .catch(err => console.log(err))
     
   }, []);
 

@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { trigger } from '../Helpers/Events';
+import { createProduct } from '../Services/ProductServices';
 
 interface ProductFormInputs {
   name: string;
   amount: number;
   price: number;
   description: string;
+  image?: string,
 }
 
 const ModalCreateProduct: React.FC = () => {
@@ -15,7 +17,11 @@ const ModalCreateProduct: React.FC = () => {
     // Perform submission logic here
     console.log(data);
     // Reset form
+
+    createProduct(data);
+
     reset();
+    closeModal();
     
   };
 

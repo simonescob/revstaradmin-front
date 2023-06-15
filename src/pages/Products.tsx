@@ -26,7 +26,7 @@ function Products() {
 
         <h2 className='text-4xl font-bold'>Productos</h2>
 
-        <button className='bg-gray-900 text-white rounded-md py-2 px-5' onClick={showModal}>Registrar empresa</button>
+        <button className='bg-gray-900 text-white rounded-md py-2 px-5' onClick={showModal}>Crear Producto</button>
 
       </div>
 
