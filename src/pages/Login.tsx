@@ -32,6 +32,8 @@ const Login: React.FC = () => {
       navigate('/companies');
     })
     .catch(err => {
+      console.log(err)
+
       setAlert({
         msg: 'Usuario y/o contraseña invalidos',
         type: 'error'
