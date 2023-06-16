@@ -22,9 +22,9 @@ export const createProduct = async (data: Product): Promise<Product[]> => {
   }
 };
 
-export const updateProduct = async (id: number): Promise<Product[]> => {
+export const updateProduct = async (data: Product): Promise<Product[]> => {
   try {
-    const response = await axios.post<Product[]>(`${BASE_URL}product/update`, id);
+    const response = await axios.post<Product[]>(`${BASE_URL}product/update`, data);
     return response.data;
   } catch (error) {
     console.error('Error updating products:', error);
@@ -34,7 +34,7 @@ export const updateProduct = async (id: number): Promise<Product[]> => {
 
 export const deleteProduct = async (id: number): Promise<Product[]> => {
   try {
-    const response = await axios.post<Product[]>(`${BASE_URL}product/delete`, id);
+    const response = await axios.post<Product[]>(`${BASE_URL}product/delete`, { id });
     return response.data;
   } catch (error) {
     console.error('Error deleting products:', error);

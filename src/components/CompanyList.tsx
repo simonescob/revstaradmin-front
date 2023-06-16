@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import { Company } from '../entities/Company';
 import { trigger } from '../Helpers/Events';
 import { fetchListCompanies } from '../Services/CompanyServices';
+import jwt_decode from "jwt-decode";
 
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
+
+  const getToken = localStorage.getItem('token') || '';
+  const decoded: any = jwt_decode(getToken);
 
   useEffect(() => {
 
@@ -37,8 +41,13 @@ const CompanyList: React.FC = () => {
             <p className="text-gray-600 mb-4">Phone: {company.phone}</p>
           </div>
           <div className="flex flex-col">
-            <button onClick={() => edit(company)} className="text-gray-600 mb-1">Editar</button>
-            <button onClick={() => remove(company.nit)} className="text-gray-600 mb-4">Borrar</button>
+            { 
+              decoded.userType === 'admin' &&
+              <>
+                <button onClick={() => edit(company)} className="text-gray-600 mb-1">Editar</button>
+                <button onClick={() => remove(company.nit)} className="text-gray-600 mb-4">Borrar</button>
+              </>
+             }
           </div>
         </div>
       ))}

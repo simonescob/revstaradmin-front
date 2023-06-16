@@ -1,39 +1,91 @@
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Product } from '../entities/Product';
-import { trigger } from '../Helpers/Events';
-import { createProduct } from '../Services/ProductServices';
+import { on } from '../Helpers/Events';
+import { createProduct, updateProduct } from '../Services/ProductServices';
 
-const ModalCreateProduct: React.FC = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<Product>();
+interface CreateProductProps {
+  visible: boolean;
+  setVisible: any;
+}
+
+const ModalCreateProduct: React.FC<CreateProductProps> = (props) => {
+
+  const [mode, setMode] = useState<'create'|'update'>('create')
+
+  const { visible, setVisible } = props;
+
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<Product>();
 
   const onSubmit = (data: Product) => {
     // Perform submission logic here
     console.log(data);
     // Reset form
 
-    createProduct(data);
+    if(mode === 'create'){
+      createProduct(data);
+    }
+
+    if(mode === 'update'){
+      updateProduct(data);
+    }
 
     reset();
     closeModal();
+    window.location.reload();
     
   };
 
   const closeModal = () => {
-    trigger('closeModalProduct');
+    setVisible(false)
   }
+
+  useEffect(() => {
+    if(visible === false){
+      reset();
+      setMode('create');
+    }
+  }, [visible])
+
+  useEffect(() => {
+    
+    on('editModalProduct', (detail: any) => {
+      
+      const data = detail.detail.product;
+
+      console.log('editing', data);
+      
+      reset();
+
+      setVisible(true);
+
+      // closeModal();
+
+      if(data){
+        setMode('update');
+        setValue('amount', data.amount);
+        setValue('name', data.name);
+        setValue('description', data.description);
+        setValue('price', data.price);
+        setValue('id', data.id);
+      }
+
+    })
+    
+  }, [])
 
   return (
     <>
 
-      {/* Modal */}
+      { visible &&
       
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800/70">
           <div className="bg-white w-96 rounded p-6">
-            <h2 className="text-2xl font-bold mb-4">Create Product</h2>
+            <h2 className="text-2xl font-bold mb-4">Crear Producto</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-                  Name
+                  Nombre
                 </label>
                 <input
                   type="text"
@@ -45,7 +97,7 @@ const ModalCreateProduct: React.FC = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="amount">
-                  Amount
+                  Cantidad
                 </label>
                 <input
                   type="number"
@@ -57,7 +109,7 @@ const ModalCreateProduct: React.FC = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-                  Price
+                  Precio
                 </label>
                 <input
                   type="number"
@@ -69,7 +121,7 @@ const ModalCreateProduct: React.FC = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="description">
-                  Description
+                  Descripción
                 </label>
                 <textarea
                   id="description"
@@ -83,20 +135,22 @@ const ModalCreateProduct: React.FC = () => {
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
                 >
-                  Create
+                  { mode === 'create' ? 'Crear' : 'Editar' }
                 </button>
                 <button
                   type="button"
                   className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
                   onClick={closeModal}
                 >
-                  Cancel
+                  Cancelar
                 </button>
               </div>
             </form>
           </div>
         </div>
       
+      }
+
     </>
   );
 };

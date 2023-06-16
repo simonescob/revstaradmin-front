@@ -10,11 +10,16 @@ const Topbar: React.FC = () => {
         </Link>
       </h1>
 
-      <div className="space-x-4">
+      <div className="space-x-4 flex">
         
-        <Link className="text-white hover:text-gray-300" to="/login">
-          Login
-        </Link>
+        <div className="text-white hover:text-gray-300 cursor-pointer" 
+          onClick={() => {
+            localStorage.removeItem('token');
+            window.location.href = '/login'
+          }}
+        >
+          Cerrar sesión
+        </div>
 
         <Link className="text-white hover:text-gray-300" to="/companies">
           Empresas

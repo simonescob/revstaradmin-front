@@ -33,6 +33,8 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
     reset();
     // Close modal
     closeModal();
+
+    window.location.reload();
   };
 
   const closeModal = () => {
@@ -76,11 +78,11 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
 
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800/70">
           <div className="bg-white w-96 rounded p-6">
-            <h2 className="text-2xl font-bold mb-4">Create Company</h2>
+            <h2 className="text-2xl font-bold mb-4">Crear Empresa</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-                  Name
+                  Nombre
                 </label>
                 <input
                   type="text"
@@ -88,11 +90,11 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
                   {...register('name', { required: true })}
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                {errors.name && <span className="text-red-500">Name is required</span>}
+                {errors.name && <span className="text-red-500">Nombre es requerido</span>}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="address">
-                  Address
+                  Dirección
                 </label>
                 <input
                   type="text"
@@ -100,11 +102,11 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
                   {...register('address', { required: true })}
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                {errors.address && <span className="text-red-500">Address is required</span>}
+                {errors.address && <span className="text-red-500">DIrección es requerido</span>}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="phone">
-                  Phone
+                  Teléfono
                 </label>
                 <input
                   type="number"
@@ -112,7 +114,7 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
                   {...register('phone', { required: true, min: 0 })}
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                {errors.phone && <span className="text-red-500">Phone is required</span>}
+                {errors.phone && <span className="text-red-500">Teléfono es requerido</span>}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2" htmlFor="nit">
@@ -124,14 +126,14 @@ const ModalCreateCompany: React.FC<CreateCompanyProps> = ( props ) => {
                   {...register('nit', { required: true, min: 0 })}
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                {errors.phone && <span className="text-red-500">Phone is required</span>}
+                {errors.phone && <span className="text-red-500">Nit es requerido</span>}
               </div>
               <div className="flex justify-end">
                 <button
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
                 >
-                  {mode}
+                  { mode === 'create' ? 'Crear' : 'Editar' }
                 </button>
                 <button
                   type="button"

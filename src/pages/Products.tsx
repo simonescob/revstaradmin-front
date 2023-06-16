@@ -1,23 +1,16 @@
 import { useState } from 'react';
 import ProductList from '../components/ProductList'
-import { on, trigger } from '../Helpers/Events';
 import ModalCreateProduct from '../Modals/ModalCreateProduct';
+import ModalDeleteProduct from '../Modals/ModalDeleteProduct';
 
 function Products() {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
 
   function showModal() {
-    trigger('showModalProduct');
-  }
-  
-  on('showModalProduct', () => {
     setModalVisible(true);
-  })
-
-  on('closeModalProduct', () => {
-    setModalVisible(false);
-  })
+  }
 
   return (
     <div>
@@ -32,7 +25,8 @@ function Products() {
 
       <ProductList/>
 
-      { modalVisible && <ModalCreateProduct/> }
+      <ModalCreateProduct visible={modalVisible} setVisible={setModalVisible} />
+      <ModalDeleteProduct visible={modalDelete} setVisible={setModalDelete} />
 
     </div>
   )
